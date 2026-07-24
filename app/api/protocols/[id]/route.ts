@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { Protocol, ProtocolType } from "@/lib/types";
+import { parseJsonBody } from "@/lib/api-utils";
 
 const VALID_TYPES: ProtocolType[] = [
   "colon_cleanse",
@@ -49,7 +50,10 @@ export async function PUT(req: NextRequest, ctx: RouteContext<"/api/protocols/[i
     return NextResponse.json({ error: "Protocol not found." }, { status: 404 });
   }
 
-  const body = await req.json();
+  const body = await parseJsonBody(req);
+  if (!body) {
+    return NextResponse.json({ error: "Request body must be valid JSON." }, { status: 400 });
+  }
 
   if (body.protocol_type && !VALID_TYPES.includes(body.protocol_type)) {
     return NextResponse.json({ error: "Invalid protocol type." }, { status: 400 });

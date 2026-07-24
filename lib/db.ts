@@ -55,7 +55,8 @@ function createDb(): Database.Database {
       feeling TEXT,
       rating INTEGER NOT NULL,
       would_recommend INTEGER,
-      notes TEXT
+      notes TEXT,
+      local_time_of_day TEXT
     );
 
     CREATE INDEX IF NOT EXISTS idx_experience_log_protocol_id ON experience_log(protocol_id);
@@ -67,6 +68,14 @@ function createDb(): Database.Database {
       user_agent TEXT
     );
   `);
+
+  // Migration for databases created before local_time_of_day existed: the timestamp
+  // column alone can't answer "was this on-schedule?" without assuming the server's
+  // timezone matches the user's, which is false whenever the app isn't deployed in UTC-0.
+  const columns = db.prepare("PRAGMA table_info(experience_log)").all() as { name: string }[];
+  if (!columns.some((c) => c.name === "local_time_of_day")) {
+    db.exec("ALTER TABLE experience_log ADD COLUMN local_time_of_day TEXT");
+  }
 
   return db;
 }

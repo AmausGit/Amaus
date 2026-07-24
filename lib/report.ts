@@ -129,8 +129,14 @@ export function computeCompositeReport(protocol: Protocol, logs: ExperienceLog[]
       buckets.unscheduled.push(log.rating);
       continue;
     }
-    const d = new Date(log.timestamp);
-    const entryMinutes = d.getHours() * 60 + d.getMinutes();
+    // Prefer the client-reported local time-of-day (accurate regardless of the
+    // server's own timezone); fall back to the UTC timestamp's hour for older rows
+    // logged before that field existed, which is only correct if the server happens
+    // to run in the user's timezone.
+    const entryMinutes = parseScheduleMinutes(log.local_time_of_day) ?? (() => {
+      const d = new Date(log.timestamp);
+      return d.getHours() * 60 + d.getMinutes();
+    })();
     const diff = entryMinutes - scheduleMinutes;
     if (Math.abs(diff) <= 60) buckets.on_time.push(log.rating);
     else if (diff > 60 && diff <= 360) buckets.late.push(log.rating);

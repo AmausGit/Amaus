@@ -55,6 +55,7 @@ export interface ExperienceLog {
   rating: number; // 1-10
   would_recommend: number | null; // 0 | 1 | null
   notes: string | null;
+  local_time_of_day: string | null; // "HH:MM" in the user's own local time at the moment of logging
 }
 
 export interface DisclaimerAcceptance {

@@ -23,7 +23,12 @@ export async function POST(req: NextRequest, ctx: RouteContext<"/api/protocols/[
     return NextResponse.json({ error: "Protocol not found." }, { status: 404 });
   }
 
-  const form = await req.formData();
+  let form: FormData;
+  try {
+    form = await req.formData();
+  } catch {
+    return NextResponse.json({ error: "Request body must be valid multipart form data." }, { status: 400 });
+  }
   const file = form.get("receipt");
   if (!(file instanceof File)) {
     return NextResponse.json({ error: "A receipt image file is required." }, { status: 400 });

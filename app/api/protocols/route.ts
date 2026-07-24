@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 import { Protocol, ProtocolType } from "@/lib/types";
+import { parseJsonBody } from "@/lib/api-utils";
 
 const VALID_TYPES: ProtocolType[] = [
   "colon_cleanse",
@@ -25,7 +26,10 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
+  const body = await parseJsonBody(request);
+  if (!body) {
+    return NextResponse.json({ error: "Request body must be valid JSON." }, { status: 400 });
+  }
 
   const name = typeof body.name === "string" ? body.name.trim() : "";
   if (!name) {

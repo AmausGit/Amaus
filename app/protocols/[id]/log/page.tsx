@@ -37,6 +37,8 @@ export default function LogCheckInPage({ params }: { params: Promise<{ id: strin
     setError(null);
     setSubmitting(true);
     try {
+      const now = new Date();
+      const local_time_of_day = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
       const res = await fetch(`/api/protocols/${id}/logs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -47,6 +49,7 @@ export default function LogCheckInPage({ params }: { params: Promise<{ id: strin
           rating,
           would_recommend: wouldRecommend,
           notes: notes || null,
+          local_time_of_day,
         }),
       });
       if (!res.ok) {
