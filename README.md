@@ -103,3 +103,17 @@ Each protocol page has a "Share With Your Doctor" section
 Protocol types now include over-the-counter and prescription medications.
 Both protocol API routes read the allowed types from `PROTOCOL_TYPES` in
 `lib/types.ts` instead of keeping their own copies.
+
+## Cash price vs. your plan (`/bill-help/compare`)
+
+Compares a self-pay price with what the patient would pay through their
+plan for one service (`lib/cash-price.ts`): remaining deductible first,
+then coinsurance, capped at the remaining out-of-pocket maximum. When cash
+is cheaper, it says how much deductible progress the patient gives up if
+the plan won't credit the payment. Two copyable texts:
+
+- a prompt asking an AI assistant to find linked cash prices nearby (from
+  hospital price transparency files and center websites) and check whether
+  the user's state requires plans to credit cash payments;
+- a letter asking the plan to count the cash payment toward the deductible
+  and out-of-pocket maximum, or to name the provision that prevents it.

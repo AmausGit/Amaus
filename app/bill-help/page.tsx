@@ -63,6 +63,11 @@ export default function BillHelpPage() {
           sent anywhere.
         </p>
         <p className="mt-2 text-sm">
+          <Link href="/bill-help/compare" className="font-medium text-slate-900 underline">
+            Planning a scan or procedure? Compare a cash price with your plan.
+          </Link>
+        </p>
+        <p className="mt-1 text-sm">
           <Link href="/bill-help/hospitals" className="font-medium text-slate-900 underline">
             Work at a hospital? Build a prompt for your own program.
           </Link>
