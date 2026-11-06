@@ -4,6 +4,8 @@ export type ProtocolType =
   | "kidney_therapy"
   | "cancer_protocol"
   | "diet"
+  | "otc_medication"
+  | "prescription_medication"
   | "other";
 
 export const PROTOCOL_TYPES: { value: ProtocolType; label: string }[] = [
@@ -12,6 +14,8 @@ export const PROTOCOL_TYPES: { value: ProtocolType; label: string }[] = [
   { value: "kidney_therapy", label: "Kidney Therapy" },
   { value: "cancer_protocol", label: "Cancer Protocol" },
   { value: "diet", label: "Diet" },
+  { value: "otc_medication", label: "Over-the-Counter Medication" },
+  { value: "prescription_medication", label: "Prescription Medication" },
   { value: "other", label: "Other" },
 ];
 

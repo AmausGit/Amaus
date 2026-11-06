@@ -1,16 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
-import { Protocol, ProtocolType } from "@/lib/types";
+import { Protocol, PROTOCOL_TYPES, ProtocolType } from "@/lib/types";
 import { parseJsonBody } from "@/lib/api-utils";
 
-const VALID_TYPES: ProtocolType[] = [
-  "colon_cleanse",
-  "liver_cleanse",
-  "kidney_therapy",
-  "cancer_protocol",
-  "diet",
-  "other",
-];
+const VALID_TYPES: ProtocolType[] = PROTOCOL_TYPES.map((t) => t.value);
 
 const EDITABLE_FIELDS = [
   "name",

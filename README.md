@@ -86,3 +86,20 @@ there is stored or sent to the server.
 - **Hospital kit** (`/bill-help/hospitals`): a hospital enters its own
   program details and gets a prompt to publish on its billing page and
   statements, plus a JSON version to post at a stable URL.
+
+## Share with your doctor
+
+Each protocol page has a "Share With Your Doctor" section
+(`lib/clinician-brief.ts`, `components/ClinicianBrief.tsx`):
+
+- **Brief for my clinician**: a plain-text summary of the protocol and the
+  user's own check-ins (dose, schedule, adherence, average rating by week,
+  symptom mentions, the 8 most recent notes) plus three standard questions.
+  It reports only logged data and adds no interpretation.
+- **Visit prep prompt for AI**: the same brief wrapped in a prompt asking
+  an AI assistant to point out patterns, flag anything urgent, and suggest
+  questions. The prompt tells the assistant not to recommend dose changes.
+
+Protocol types now include over-the-counter and prescription medications.
+Both protocol API routes read the allowed types from `PROTOCOL_TYPES` in
+`lib/types.ts` instead of keeping their own copies.

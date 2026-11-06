@@ -6,6 +6,7 @@ import { ExperienceLog, formatProtocolId, PROTOCOL_TYPES, Protocol } from "@/lib
 import { CompositeReport } from "@/lib/report";
 import CompositeReportView from "@/components/CompositeReportView";
 import ReceiptCapture from "@/components/ReceiptCapture";
+import ClinicianBrief from "@/components/ClinicianBrief";
 
 function typeLabel(type: string): string {
   return PROTOCOL_TYPES.find((t) => t.value === type)?.label ?? type;
@@ -130,6 +131,11 @@ export default function ProtocolDetailPage({ params }: { params: Promise<{ id: s
       <section className="rounded-lg border border-slate-200 bg-white p-4">
         <h2 className="font-semibold text-slate-900 mb-3">Composite Report</h2>
         <CompositeReportView report={report} />
+      </section>
+
+      <section className="rounded-lg border border-slate-200 bg-white p-4">
+        <h2 className="font-semibold text-slate-900 mb-3">Share With Your Doctor</h2>
+        <ClinicianBrief protocol={protocol} report={report} logs={logs} />
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-4">
