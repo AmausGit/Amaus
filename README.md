@@ -66,3 +66,23 @@ and any uploaded receipt images are created under `data/` and
   paired with a server-side search API.
 - **Single user, no auth** — this is scoped as a personal tracker, not a
   multi-tenant product.
+
+## Hospital bill help (`/bill-help`)
+
+A client-only tool for people worried about hospital bills. Nothing typed
+there is stored or sent to the server.
+
+- **Poverty-level calculator** (`lib/fpl.ts`): household size, income and
+  state give income as a percent of the 2026 HHS poverty guideline, plus
+  the dollar limits at the cutoffs hospital financial assistance policies
+  commonly use (100% to 600%). Figures come from the Federal Register
+  notice of January 15, 2026; update `TABLES` and `FPL_YEAR` each January.
+- **Copy-paste prompt** (`lib/bill-help.ts`): builds a prompt the person
+  pastes into Claude or another assistant. It asks the assistant to find
+  nonprofit hospitals nearby, read each one's financial assistance policy
+  (required under IRS section 501(r)), say which ones the person likely
+  qualifies for, draft a request for an itemized bill and an application,
+  and check an EOB against the bill.
+- **Hospital kit** (`/bill-help/hospitals`): a hospital enters its own
+  program details and gets a prompt to publish on its billing page and
+  statements, plus a JSON version to post at a stable URL.
